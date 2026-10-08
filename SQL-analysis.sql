@@ -39,3 +39,15 @@ SELECT
 FROM SH.COSTS
 GROUP BY PROD_ID
 ORDER BY total_profit DESC
+
+-- Identify products with highest price variation
+SELECT 
+    PROD_ID,
+    MIN(UNIT_PRICE) AS min_price,
+    MAX(UNIT_PRICE) AS max_price,
+    ROUND(MAX(UNIT_PRICE) - MIN(UNIT_PRICE), 2) AS price_range,
+    ROUND(AVG(UNIT_PRICE), 2) AS avg_price
+FROM SH.COSTS
+GROUP BY PROD_ID
+HAVING MAX(UNIT_PRICE) - MIN(UNIT_PRICE) > 5
+ORDER BY price_range DESC;
